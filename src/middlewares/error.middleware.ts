@@ -12,7 +12,7 @@ import { Service } from 'typedi';
 interface ErrorInterface extends Error {
   name: string;
   httpCode: number;
-  description: string;
+  description: string | undefined;
   errors: string[] | undefined;
 }
 
@@ -47,7 +47,7 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
         });
       });
     } else {
-      // If it's not a 400 family error, then it will not have multiple errors.
+      // If it's not a 400, then it will not have multiple errors.
       responseObject.errors = undefined;
       responseObject.name = error.name; // The name will apear always
       if (error.httpCode) {
@@ -67,6 +67,9 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
         responseObject.description = error.message;
       } else if (typeof error === 'string') {
         responseObject.description = error;
+      }
+      if (responseObject.description === '') {
+        responseObject.description = undefined;
       }
     }
 

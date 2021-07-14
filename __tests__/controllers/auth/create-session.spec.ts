@@ -36,11 +36,10 @@ describe('creating a session', () => {
       .post(`${API}/auth/signin`)
       .send(authFields);
     expect(response.status).toBe(401);
-    expect(response.body).toStrictEqual(
-      expect.objectContaining({
-        errMessage: expect.any(String),
-        errCode: expect.any(Number)
-      })
-    );
+    expect(response.body).toStrictEqual({
+      description: 'Invalid credentials',
+      httpCode: 401,
+      name: 'UnauthorizedError'
+    });
   });
 });

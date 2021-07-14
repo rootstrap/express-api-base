@@ -23,15 +23,22 @@ describe('creating an account', () => {
     expect(response.status).toBe(400);
   });
 
-  it('returns http code 400 with a short password', async () => {
+  it('returns http code 400 with 4 errors on the errors field', async () => {
     const userFields = {};
     const response = await request(app)
       .post(`${API}/auth/signup`)
       .send(userFields);
-    expect(response.body).toStrictEqual(expect.objectContaining({
-      description: ErrorsMessages.PASSWORD_ERROR,
+    expect(response.body).toStrictEqual({
+      description: ErrorsMessages.BODY_ERRORS,
+      errors: [
+        'Property firstName must be a string',
+        'Property lastName must be a string',
+        'Property email must be an email',
+        'Property Password is too short, the minimum length is 6 characters.'
+      ],
       httpCode: HttpStatusCode.BAD_REQUEST,
-      name: ErrorsMessages.BAD_REQUEST_ERROR
-    }));
+      name: 'Bad request error'
+    });
+    expect(response.body.errors).toHaveLength(4);
   });
 });
