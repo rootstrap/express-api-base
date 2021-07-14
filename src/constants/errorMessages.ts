@@ -12,7 +12,14 @@ export enum ErrorsMessages {
   REDIS_ERROR = 'Error in redis database',
   REDIS_ERROR_SET_TOKEN = 'Error at set user token in blacklist',
   UNKNOWN = 'Unknown error',
-  DEFAULT = 'Internal Server Error'
+  DEFAULT = 'Internal Server Error',
+  PASSWORD_ERROR = 'Password is too short, the minimum length is 6 characters.',
+  BODY_ERRORS = "You have errors in your request's body." +
+    "Check 'errors' field for more details.",
+
+  // HTTP STANDARD MESSAGES
+  INTERNAL_SERVER_ERROR = 'Internal server error',
+  BAD_REQUEST_ERROR = 'Bad request error'
 }
 
 export const Errors = {
