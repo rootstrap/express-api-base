@@ -1,5 +1,5 @@
 import { DEV_ENV } from '@config';
-import { Errors } from '@constants/errorMessages';
+import { ErrorsMessages } from '@constants/errorMessages';
 import { HttpStatusCode } from '@constants/httpStatusCode';
 import { ValidationError } from 'class-validator';
 import { Request, Response } from 'express';
@@ -36,8 +36,8 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
       // I think we shoudn't send the code as a field. We have HTTP for that.
       // Also this generate code duplication.
       responseObject.httpCode = HttpStatusCode.BAD_REQUEST;
-      responseObject.name = Errors.BAD_REQUEST_ERROR;
-      responseObject.description = Errors.BODY_ERRORS;
+      responseObject.name = ErrorsMessages.BAD_REQUEST_ERROR;
+      responseObject.description = ErrorsMessages.BODY_ERRORS;
       responseObject.errors = [];
 
       error.errors.forEach((element: ValidationError) => {

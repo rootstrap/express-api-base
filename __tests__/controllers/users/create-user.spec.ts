@@ -5,7 +5,6 @@ import app from '@app';
 import { User } from '@entities/user.entity';
 import { API } from '../../utils';
 import { HttpStatusCode } from '@constants/httpStatusCode';
-import { Errors } from '@constants/errorMessages';
 
 describe('creating a user', () => {
   it('returns http code 200 and creates the user', async () => {

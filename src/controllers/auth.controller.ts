@@ -39,7 +39,7 @@ export class AuthController {
       const token = await this.sessionService.signIn({ email, password });
       return { token };
     } catch (error) {
-      throw Errors[error.message] || Errors[ErrorsMessages.DEFAULT];
+      throw Errors[error.message] || Errors[ErrorsMessages.INTERNAL_SERVER_ERROR];
     }
   }
 
