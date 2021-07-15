@@ -62,7 +62,7 @@
   "dependencies": {
     "@admin-bro/express": "^3.1.0",
     "@admin-bro/typeorm": "^1.4.0",
-    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.2",
     "admin-bro": "^3.4.0",
     "admin-bro-expressjs": "^2.1.1",
