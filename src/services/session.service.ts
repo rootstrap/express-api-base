@@ -19,8 +19,7 @@ export class SessionService {
   async signUp(user: User) {
     try {
       this.userService.hashUserPassword(user);
-      await this.userRepository.save(user);
-      return user;
+      return await this.userRepository.save(user);
     } catch (error) {
       throw new DatabaseError(error.message + ' ' + error.detail);
     }

@@ -35,17 +35,7 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
       res.status(HttpStatusCode.BAD_REQUEST);
       // I think we shoudn't send the code as a field. We have HTTP for that.
       // Also this generate code duplication.
-      responseObject.httpCode = HttpStatusCode.BAD_REQUEST;
-      responseObject.name = ErrorsMessages.BAD_REQUEST_ERROR;
-      responseObject.description = ErrorsMessages.BODY_ERRORS;
-      responseObject.errors = [];
-
-      error.errors.forEach((element: ValidationError) => {
-        const constraints = element.constraints || Object;
-        Object.keys(constraints).forEach(type => {
-          responseObject.errors?.push(`Property ${constraints[type]}`);
-        });
-      });
+      this.getClassValidatorResponse(responseObject, error);
     } else {
       // If it's not a 400, then it will not have multiple errors.
       responseObject.errors = undefined;
@@ -57,9 +47,7 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
         responseObject.httpCode = HttpStatusCode.INTERNAL_SERVER;
         res.status(HttpStatusCode.INTERNAL_SERVER);
       }
-
-      const developmentMode: boolean = DEV_ENV ? true : false;
-      if (developmentMode) {
+      if (DEV_ENV) {
         responseObject.stack = error.stack;
       }
       if (error instanceof Error) {
@@ -74,5 +62,22 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
     }
 
     res.json(responseObject);
+  }
+
+  private getClassValidatorResponse(
+    responseObject: ErrorInterface,
+    error: any
+  ) {
+    responseObject.httpCode = HttpStatusCode.BAD_REQUEST;
+    responseObject.name = ErrorsMessages.BAD_REQUEST_ERROR;
+    responseObject.description = ErrorsMessages.BODY_ERRORS;
+    responseObject.errors = [];
+
+    error.errors.forEach((element: ValidationError) => {
+      const constraints = element.constraints || Object;
+      Object.keys(constraints).forEach(type => {
+        responseObject.errors?.push(`Property ${constraints[type]}`);
+      });
+    });
   }
 }
