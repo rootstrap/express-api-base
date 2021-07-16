@@ -33,9 +33,17 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
       error.errors.every(element => element instanceof ValidationError)
     ) {
       res.status(HttpStatusCode.BAD_REQUEST);
-      // I think we shoudn't send the code as a field. We have HTTP for that.
-      // Also this generate code duplication.
-      this.getClassValidatorResponse(responseObject, error);
+      responseObject.httpCode = HttpStatusCode.BAD_REQUEST;
+      responseObject.name = ErrorsMessages.BAD_REQUEST_ERROR;
+      responseObject.description = ErrorsMessages.BODY_ERRORS;
+      responseObject.errors = [];
+
+      error.errors.forEach((element: ValidationError) => {
+        const constraints = element.constraints || Object;
+        Object.keys(constraints).forEach(type => {
+          responseObject.errors?.push(`Property ${constraints[type]}`);
+        });
+      });
     } else {
       // If it's not a 400, then it will not have multiple errors.
       responseObject.errors = undefined;
@@ -60,24 +68,6 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
         responseObject.description = undefined;
       }
     }
-
     res.json(responseObject);
-  }
-
-  private getClassValidatorResponse(
-    responseObject: ErrorInterface,
-    error: any
-  ) {
-    responseObject.httpCode = HttpStatusCode.BAD_REQUEST;
-    responseObject.name = ErrorsMessages.BAD_REQUEST_ERROR;
-    responseObject.description = ErrorsMessages.BODY_ERRORS;
-    responseObject.errors = [];
-
-    error.errors.forEach((element: ValidationError) => {
-      const constraints = element.constraints || Object;
-      Object.keys(constraints).forEach(type => {
-        responseObject.errors?.push(`Property ${constraints[type]}`);
-      });
-    });
   }
 }
