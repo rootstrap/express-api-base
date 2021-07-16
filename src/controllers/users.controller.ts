@@ -37,7 +37,7 @@ export class UserController {
       return await this.usersService.createUser(user);
     } catch (error: any) {
       throw new BadRequestError(
-        error.detail ?? error.message ?? ErrorsMessages.DEFAULT
+        error.detail ?? error.message ?? ErrorsMessages.INTERNAL_SERVER_ERROR
       );
     }
   }

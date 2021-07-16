@@ -5,11 +5,17 @@ import app from '@app';
 import { User } from '@entities/user.entity';
 import { JWTService } from '@services/jwt.service';
 import { API } from '../../utils';
+import { HttpStatusCode } from '@constants/httpStatusCode';
 
 describe('requesting all users', () => {
   let user: User;
   let token: string;
   const jwtService = Container.get(JWTService);
+  const unAuthenticatedError = {
+    description: 'Authorization is required for request on GET /api/v1/users',
+    httpCode: 401,
+    name: 'AuthorizationRequiredError'
+  };
 
   beforeEach(async () => {
     user = await factory(User)().create();
@@ -20,10 +26,7 @@ describe('requesting all users', () => {
     const response = await request(app).get(`${API}/users`);
     expect(response.status).toBe(401);
     expect(response.body).toStrictEqual(
-      expect.objectContaining({
-        errMessage: expect.any(String),
-        errCode: expect.any(Number)
-      })
+      expect.objectContaining(unAuthenticatedError)
     );
   });
 
@@ -33,10 +36,7 @@ describe('requesting all users', () => {
       .set({ Authorization: 'Inv3nT3d-T0k3N' });
     expect(response.status).toBe(401);
     expect(response.body).toStrictEqual(
-      expect.objectContaining({
-        errMessage: expect.any(String),
-        errCode: expect.any(Number)
-      })
+      expect.objectContaining(unAuthenticatedError)
     );
   });
 
@@ -65,8 +65,8 @@ describe('requesting all users', () => {
     expect(response.status).toBe(404);
     expect(response.body).toStrictEqual(
       expect.objectContaining({
-        errMessage: expect.any(String),
-        errCode: expect.any(Number)
+        httpCode: HttpStatusCode.NOT_FOUND,
+        name: 'NotFoundError'
       })
     );
   });
