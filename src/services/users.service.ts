@@ -11,11 +11,6 @@ export class UsersService {
 
   private readonly userRepository = getRepository<User>(User);
 
-  givenCredentials(input: AuthInterface.ISignInInput): boolean {
-    const { email, password } = input;
-    return !!(email && password);
-  }
-
   comparePassword(input: AuthInterface.IComparePasswordInput): boolean {
     const { password, userPassword } = input;
     return compareSync(password, userPassword);

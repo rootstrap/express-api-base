@@ -1,12 +1,7 @@
 import { ErrorsMessages } from '@constants/errorMessages';
-import { IsEmail, IsString, MinLength } from 'class-validator';
-export class UserDTO {
-  @IsString()
-  firstName?: string;
+import { IsEmail, MinLength } from 'class-validator';
 
-  @IsString()
-  lastName?: string;
-
+export class BaseUserDTO {
   @IsEmail()
   email!: string;
 

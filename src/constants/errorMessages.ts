@@ -10,7 +10,7 @@ export enum ErrorsMessages {
   INVALID_CREDENTIALS = 'Invalid credentials',
   EMAIL_NOT_SENT = 'Error at sending email',
   REDIS_ERROR = 'Error in redis database',
-  REDIS_ERROR_SET_TOKEN = 'Error at set user token in blacklist',
+  REDIS_ERROR_SET_TOKEN = 'Error setting user\'s token in blacklist',
   UNKNOWN = 'Unknown error',
   PASSWORD_ERROR = 'Password is too short, the minimum length is 6 characters.',
   BODY_ERRORS = "You have errors in your request's body." +

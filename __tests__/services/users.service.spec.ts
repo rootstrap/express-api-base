@@ -8,7 +8,8 @@ beforeAll(async () => {
   usersService = Container.get(UsersService);
 });
 
-describe('given credentials', () => {
+//TODO this needs a refactor, since now we are going to controll it from class-validator :)
+/*describe('given credentials', () => {
   let email: string;
   let password: string;
 
@@ -50,6 +51,7 @@ describe('given credentials', () => {
     expect(result).toBeFalsy();
   });
 });
+*/
 
 describe('compare password', () => {
   let userPassword: string;
@@ -67,7 +69,7 @@ describe('compare password', () => {
     expect(result).toBeTruthy();
   });
 
-  it('checks that the password don\'t match', () => {
+  it("checks that the password don't match", () => {
     const password = 'anotherpassword';
     const result = usersService.comparePassword({ password, userPassword });
     expect(result).toBeFalsy();
