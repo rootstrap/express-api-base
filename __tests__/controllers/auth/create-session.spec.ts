@@ -4,6 +4,8 @@ import { factory } from 'typeorm-seeding';
 import { User } from '@entities/user.entity';
 import { API } from '../../utils';
 import { genSaltSync, hashSync } from 'bcrypt';
+import { ErrorsMessages } from '@constants/errorMessages';
+import { HttpStatusCode } from '@constants/httpStatusCode';
 
 describe('creating a session', () => {
   let email;
@@ -37,9 +39,9 @@ describe('creating a session', () => {
       .send(authFields);
     expect(response.status).toBe(401);
     expect(response.body).toStrictEqual({
-      description: 'Invalid credentials',
-      httpCode: 401,
-      name: 'UnauthorizedError'
+      description: ErrorsMessages.INVALID_CREDENTIALS,
+      httpCode: HttpStatusCode.UNAUTHORIZED,
+      name: 'Error'
     });
   });
 });

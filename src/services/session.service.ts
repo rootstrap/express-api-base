@@ -7,6 +7,8 @@ import { RedisService } from '@services/redis.service';
 import { AuthInterface } from '@interfaces';
 import { DatabaseError } from '@exception/database.error';
 import { RedisError } from '@exception/redis.error';
+import { HttpError } from 'routing-controllers';
+import { HttpStatusCode } from '@constants/httpStatusCode';
 
 @Service()
 export class SessionService {
@@ -36,7 +38,10 @@ export class SessionService {
         .where({ email })
         .getOneOrFail();
     } catch (error) {
-      throw new DatabaseError(error.message + ' ' + error.detail);
+      throw new HttpError(
+        HttpStatusCode.UNAUTHORIZED,
+        ErrorsMessages.INVALID_CREDENTIALS
+      );
     }
 
     if (
@@ -45,7 +50,10 @@ export class SessionService {
         userPassword: user.password
       })
     ) {
-      throw new Error(ErrorsMessages.INVALID_CREDENTIALS);
+      throw new HttpError(
+        HttpStatusCode.UNAUTHORIZED,
+        ErrorsMessages.INVALID_CREDENTIALS
+      );
     }
 
     const token = this.userService.generateToken(user);
