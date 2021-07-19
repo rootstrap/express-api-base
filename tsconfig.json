@@ -21,9 +21,11 @@
       "@constants/*": ["src/constants/*"],
       "@utils/*": ["src/utils/*"],
       "@app": ["src/app"],
-      "@server": ["src/server"],
       "@ormconfig": ["ormconfig"],
-      "@views": ["src/views"]
+      "@views": ["src/views"],
+      "@exception/*": ["src/exception/*"],
+      "@dto/*": ["src/dto/*"],
+      "@server": ["src/server"]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

@@ -11,7 +11,7 @@
     "prod": "ENV=prod node -r ./prod-paths.js ./dist/src/server.js",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "posttypeorm": "prettier -w src/database/migrations",
-    "test": "ENV=test jest --runInBand --forceExit --detectOpenHandles --useStderr",
+    "test": "ENV=test jest --runInBand --forceExit --detectOpenHandles --useStderr --silent",
     "test:cover": "yarn test --coverage",
     "test:ci": "ENV=ci jest --runInBand --forceExit --detectOpenHandles --coverage",
     "db:setup": "yarn typeorm schema:sync && yarn seed:run",

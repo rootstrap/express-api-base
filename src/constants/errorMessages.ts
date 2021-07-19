@@ -10,9 +10,14 @@ export enum ErrorsMessages {
   INVALID_CREDENTIALS = 'Invalid credentials',
   EMAIL_NOT_SENT = 'Error at sending email',
   REDIS_ERROR = 'Error in redis database',
-  REDIS_ERROR_SET_TOKEN = 'Error at set user token in blacklist',
+  REDIS_ERROR_SET_TOKEN = "Error setting user's token in blacklist",
   UNKNOWN = 'Unknown error',
-  DEFAULT = 'Internal Server Error'
+  BODY_ERRORS = "You have errors in your request's body." +
+    "Check 'errors' field for more details.",
+  PASSWORD_ERROR = 'Property password must be longer than or equal to 6 characters',
+  // HTTP STANDARD MESSAGES
+  INTERNAL_SERVER_ERROR = 'Internal Server Error',
+  BAD_REQUEST_ERROR = 'Bad request error'
 }
 
 export const Errors = {
@@ -27,5 +32,7 @@ export const Errors = {
     502,
     ErrorsMessages.EMAIL_NOT_SENT
   ),
-  [ErrorsMessages.DEFAULT]: new InternalServerError(ErrorsMessages.DEFAULT)
+  [ErrorsMessages.BAD_REQUEST_ERROR]: new InternalServerError(
+    ErrorsMessages.BAD_REQUEST_ERROR
+  )
 };
