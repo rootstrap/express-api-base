@@ -10,12 +10,11 @@ export enum ErrorsMessages {
   INVALID_CREDENTIALS = 'Invalid credentials',
   EMAIL_NOT_SENT = 'Error at sending email',
   REDIS_ERROR = 'Error in redis database',
-  REDIS_ERROR_SET_TOKEN = 'Error setting user\'s token in blacklist',
+  REDIS_ERROR_SET_TOKEN = "Error setting user's token in blacklist",
   UNKNOWN = 'Unknown error',
-  PASSWORD_ERROR = 'Password is too short, the minimum length is 6 characters.',
   BODY_ERRORS = "You have errors in your request's body." +
     "Check 'errors' field for more details.",
-
+  PASSWORD_ERROR = 'Property password must be longer than or equal to 6 characters',
   // HTTP STANDARD MESSAGES
   INTERNAL_SERVER_ERROR = 'Internal Server Error',
   BAD_REQUEST_ERROR = 'Bad request error'

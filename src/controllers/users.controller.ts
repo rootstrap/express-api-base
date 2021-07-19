@@ -14,6 +14,8 @@ import { Service } from 'typedi';
 import { User } from '@entities/user.entity';
 import { UsersService } from '@services/users.service';
 import { ErrorsMessages } from '../constants/errorMessages';
+import { SignUpDTO } from '@dto/signUpDTO';
+import { EntityMapper } from '@utils/mapper/entityMapper.service';
 
 @JsonController('/users')
 @Service()
@@ -32,9 +34,11 @@ export class UserController {
   }
 
   @Post()
-  async post(@Body() user: User): Promise<InsertResult> {
+  async post(@Body() userDTO: SignUpDTO): Promise<InsertResult> {
     try {
-      return await this.usersService.createUser(user);
+      return await this.usersService.createUser(
+        EntityMapper.mapTo(User, userDTO)
+      );
     } catch (error: any) {
       throw new BadRequestError(
         error.detail ?? error.message ?? ErrorsMessages.INTERNAL_SERVER_ERROR
@@ -45,8 +49,9 @@ export class UserController {
   @Put('/:id')
   async put(
     @Param('id') id: number,
-    @Body() user: User
+    @Body() userDTO: SignUpDTO
   ): Promise<UpdateResult> {
+    const user: User = EntityMapper.mapTo(User, userDTO);
     return this.usersService.editUser({ id, user });
   }
 
